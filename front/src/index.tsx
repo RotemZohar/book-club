@@ -8,7 +8,6 @@ import { Provider as UseFetchProvider } from "use-http";
 import App from "./App";
 import { persistor, store } from "./redux/store";
 import useFetchOptions from "./hooks/use-fetch-options";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 const BACK_API = `http://localhost:4000/api`;
 
@@ -27,4 +26,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-serviceWorkerRegistration.register();
+// serviceWorkerRegistration.register();
