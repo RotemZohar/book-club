@@ -19,9 +19,9 @@ const PrivateRoute: React.FC<RouteProps> = () => {
     return <Loader />;
   }
 
-  if (!isConnected) {
-    return <Navigate to={routes.signin} replace />;
-  }
+  // if (!isConnected) {
+  //   return <Navigate to={routes.signin} replace />;
+  // }
 
   return <Outlet />;
 };
