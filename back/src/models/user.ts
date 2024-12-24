@@ -1,7 +1,6 @@
 import { ObjectId } from "mongodb";
 import { Schema, model, Types } from "mongoose";
-import type { GroupInterface } from "./group";
-import type { PetInterface } from "./pet";
+import type { ClubInterface } from "./club";
 
 export interface UserInterface {
   _id: ObjectId;
@@ -9,8 +8,7 @@ export interface UserInterface {
   password: string;
   tokens: string[];
   name: string;
-  groups: Types.DocumentArray<GroupInterface>;
-  pets: Types.DocumentArray<PetInterface>;
+  clubs: Types.DocumentArray<ClubInterface>;
 }
 
 const userSchema = new Schema<UserInterface>({
@@ -18,8 +16,7 @@ const userSchema = new Schema<UserInterface>({
   password: { type: String, required: true },
   tokens: [String],
   name: { type: String, required: true },
-  groups: [{ type: Schema.Types.ObjectId, ref: "Group" }],
-  pets: [{ type: Schema.Types.ObjectId, ref: "Pet" }],
+  clubs: [{ type: Schema.Types.ObjectId, ref: "Club" }],
 });
 
 export const UserModel = model<UserInterface>("User", userSchema);
