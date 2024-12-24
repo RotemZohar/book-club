@@ -10,7 +10,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "unused-imports"],
   "rules": {
     // Fixes for typescript
     "no-unused-vars": "off",
@@ -36,7 +36,7 @@
     ],
     "import/prefer-default-export": "off",
     "no-underscore-dangle": "off",
-    "@typescript-eslint/naming-convention": "off"
-    // "unused-imports/no-unused-imports-ts": "warn"
+    "@typescript-eslint/naming-convention": "off",
+    "unused-imports/no-unused-imports": "error"
   }
 }
