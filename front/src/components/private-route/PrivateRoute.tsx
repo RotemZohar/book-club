@@ -1,9 +1,6 @@
-import { TokenSharp } from "@mui/icons-material";
-import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { RouteProps, Outlet, Navigate } from "react-router-dom";
+import { RouteProps, Outlet } from "react-router-dom";
 import { acquireToken } from "../../auth/auth-utils";
-import { routes } from "../../routes";
 import Loader from "../loader/Loader";
 
 const PrivateRoute: React.FC<RouteProps> = () => {

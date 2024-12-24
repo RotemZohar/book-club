@@ -5,7 +5,8 @@
     "build": "tsc && npm run copyfiles",
     "copyfiles": "copyfiles \"src/public/**/*\" dist",
     "dev": "ts-node-dev --respawn --inspect=5712 src/index.ts",
-    "test": "jest --runInBand ./test"
+    "test": "jest --runInBand ./test",
+    "lint": "eslint src"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
