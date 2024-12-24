@@ -1,1 +1,1 @@
-Menhem project!
+Book Club project!
