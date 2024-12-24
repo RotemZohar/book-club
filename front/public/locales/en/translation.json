@@ -1,0 +1,7 @@
+{
+  "general": "general stuff",
+  "user": {
+    "email": "Email",
+    "password": "Password"
+  }
+}
