@@ -1,10 +1,8 @@
-import { TokenSharp } from "@mui/icons-material";
-import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { RouteProps, Outlet, Navigate } from "react-router-dom";
 import { acquireToken } from "../../auth/auth-utils";
-import { routes } from "../../routes";
 import Loader from "../loader/Loader";
+import { routes } from "../../routes";
 
 const PrivateRoute: React.FC<RouteProps> = () => {
   const [isConnected, setIsConnected] = useState<boolean | undefined>(
@@ -19,9 +17,9 @@ const PrivateRoute: React.FC<RouteProps> = () => {
     return <Loader />;
   }
 
-  // if (!isConnected) {
-  //   return <Navigate to={routes.signin} replace />;
-  // }
+  if (!isConnected) {
+    return <Navigate to={routes.signin} replace />;
+  }
 
   return <Outlet />;
 };

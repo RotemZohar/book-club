@@ -40,7 +40,11 @@ clubRouter.get("/:clubId", async (req, res) => {
 
 // create club
 clubRouter.post("/", async (req, res) => {
-  const { name, description, users, books } = req.body;
+  const { name, description, users = [], books = [] } = req.body;
+
+  if (!req.user || !req.user._id) {
+    return res.status(401).json({ message: "Unauthorized. User information is missing." });
+  }
 
   try {
     const newClub = await ClubModel.create({
@@ -52,12 +56,12 @@ clubRouter.post("/", async (req, res) => {
 
     await UserModel.updateMany(
       { _id: { $in: [...users, req.user._id] } },
-      { $push: { clubs: newClub.id } }
+      { $addToSet: { clubs: newClub._id } }
     );
 
     await BookModel.updateMany(
       { _id: { $in: books } },
-      { $push: { clubs: newClub.id } }
+      { $addToSet: { clubs: newClub._id } }
     );
 
     return res.status(201).json({ 
