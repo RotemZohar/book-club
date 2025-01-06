@@ -5,7 +5,7 @@ import { UserModel } from "../models/user";
 
 const clubRouter = Router();
 
-// get all
+// get all - maybe change to/add get all by user id
 clubRouter.get("/", async (req, res) => {
   const clubs = await ClubModel.find();
   res.status(200).json({ clubs });
@@ -77,18 +77,18 @@ clubRouter.post("/", async (req, res) => {
 
 
 // add users
-clubRouter.post("/:clubId/Users", async (req, res) => {
+clubRouter.put("/:clubId/users", async (req, res) => {
   const { clubId } = req.params;
-  const { usersIds } = req.body;
+  const { users = [] } = req.body;
 
-  if (!clubId || !usersIds || !Array.isArray(usersIds) || usersIds.length === 0) {
+  if (!clubId || !users || !Array.isArray(users) || users.length === 0) {
     return res.status(400).json({ message: "Missing required parameters. Please provide all fields." });
   }
 
   try {
     const addedUsers = await ClubModel.findByIdAndUpdate(
       clubId,
-      { $addToSet: { members: usersIds }},
+      { $addToSet: { members: users }},
       { new: true }
     );
 
@@ -97,7 +97,7 @@ clubRouter.post("/:clubId/Users", async (req, res) => {
     }
 
     await UserModel.updateMany(
-      { _id: { $in: usersIds } },
+      { _id: { $in: users } },
       { $addToSet: { clubs: clubId } }
     );
 
