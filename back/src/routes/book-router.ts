@@ -4,7 +4,7 @@ import { BookModel, BookInterface } from "../models/book";
 
 const bookRouter = Router();
 
-// get all
+// get all - MAYBE NOT NEEDED
 bookRouter.get("/", async (req, res) => {
   const books = await BookModel.find();
   res.status(200).json({ books });
@@ -79,12 +79,7 @@ bookRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { title, description, author, pages, cover, startDate, endDate } = req.body;
 
-  if (!title && !description && !author && !pages && !cover && !startDate && !endDate) {
-    return res.status(400).json({ message: "Missing required parameters. Please provide all fields." });
-  }
-
   try {
-
     /// TODO: make a find by id func
     const book = await BookModel.findById(id);
     if (!book) {
@@ -114,7 +109,7 @@ bookRouter.put("/:id", async (req, res) => {
 
 
 // delete book
-bookRouter.delete("/book/:bookId", async (req, res) => {
+bookRouter.delete("/:bookId", async (req, res) => {
   const { bookId } = req.params;
 
   if (!bookId) {

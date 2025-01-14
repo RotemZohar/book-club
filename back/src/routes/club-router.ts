@@ -35,7 +35,7 @@ clubRouter.get("/:clubId", async (req, res) => {
     console.error("Error getting club:", err);
     res.status(500).json({ message: "Something went wrong. Please try again." });
   }
-});
+}); 
 
 
 // create club
@@ -76,7 +76,7 @@ clubRouter.post("/", async (req, res) => {
 });
 
 
-// add users
+// add users (CHANGE TO PATCH NAYBE)
 clubRouter.put("/:clubId/users", async (req, res) => {
   const { clubId } = req.params;
   const { users = [] } = req.body;
@@ -113,7 +113,7 @@ clubRouter.put("/:clubId/users", async (req, res) => {
 });
 
 
-// update info
+// update info (CHANGE TO PATCH NAYBE)
 clubRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { name, description } = req.body;
