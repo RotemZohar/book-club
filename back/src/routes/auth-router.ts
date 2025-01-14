@@ -2,7 +2,6 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../models/user";
-import { PetModel } from "../models/pet";
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "../utils/auth-utils";
 import { authMiddleware } from "../middlewares/auth-middleware";
 
@@ -123,20 +122,6 @@ authRouter.post("/logout", authMiddleware(true), async (req, res) => {
   await user.save();
 
   res.sendStatus(200);
-});
-
-authRouter.get("/:petId/medical/guests", async (req, res) => {
-  const { petId } = req.params;
-
-  if (!petId) {
-    return res.status(400).json("Parameter is missing");
-  }
-
-  const petMedical = await PetModel.findOne({ _id: petId })
-    .populate({ path: "members", select: ["name", "email"] })
-    .select(["medical", "name", "imgUrl"]);
-
-  res.status(201).json(petMedical);
 });
 
 export default authRouter;

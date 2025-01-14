@@ -1,21 +1,21 @@
 import { ObjectId } from "mongodb";
 import { Schema, model, Types } from "mongoose";
-import type { PetInterface } from "./pet";
 import type { UserInterface } from "./user";
+import { BookInterface } from "./book";
 
-export interface GroupInterface {
+export interface ClubInterface {
   _id: ObjectId;
   name: string;
   description: string;
   members: Types.DocumentArray<UserInterface>;
-  pets: Types.DocumentArray<PetInterface>;
+  books: Types.DocumentArray<BookInterface>;
 }
 
-const groupSchema = new Schema<GroupInterface>({
+const clubSchema = new Schema<ClubInterface>({
   name: { type: String, required: true },
   description: { type: String },
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  pets: [{ type: Schema.Types.ObjectId, ref: "Pet" }],
+  books: [{ type: Schema.Types.ObjectId, ref: "Book" }]
 });
 
-export const GroupModel = model<GroupInterface>("Group", groupSchema);
+export const ClubModel = model<ClubInterface>("Club", clubSchema);
