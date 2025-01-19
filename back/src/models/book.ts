@@ -8,10 +8,11 @@ export interface BookInterface {
   author: string;
   description: string;
   pages: number;
-  cover: string; 
+  cover: string;
   startDate: Date;
   endDate: Date;
-  clubId: ClubInterface['_id'];
+  previewLink: string;
+  clubId: ClubInterface["_id"];
 }
 
 const bookSchema = new Schema<BookInterface>({
@@ -22,8 +23,8 @@ const bookSchema = new Schema<BookInterface>({
   cover: { type: String },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
-  clubId: { type: Schema.Types.ObjectId,ref: 'Club', required: true
-  },
+  previewLink: { type: String },
+  clubId: { type: Schema.Types.ObjectId, ref: "Club", required: true },
 });
 
 export const BookModel = model<BookInterface>("Book", bookSchema);

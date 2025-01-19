@@ -10,7 +10,6 @@ bookRouter.get("/", async (req, res) => {
   res.status(200).json({ books });
 });
 
-
 // get by id
 bookRouter.get("/:bookId", async (req, res) => {
   const { bookId } = req.params;
@@ -19,7 +18,7 @@ bookRouter.get("/:bookId", async (req, res) => {
     return res.status(400).json("Parameter is missing");
   }
 
-  try {  
+  try {
     const book = await BookModel.findById({ _id: bookId });
 
     if (!book) {
@@ -27,20 +26,42 @@ bookRouter.get("/:bookId", async (req, res) => {
     }
 
     res.status(200).json(book);
-
-  } catch(err) {
+  } catch (err) {
     console.error("Error getting book:", err);
-    res.status(500).json({ message: "Something went wrong. Please try again." });
+    res
+      .status(500)
+      .json({ message: "Something went wrong. Please try again." });
   }
 });
 
-
 // create book
 bookRouter.post("/", async (req, res) => {
-  const { title, description, author, pages, cover, startDate, endDate, clubId} = req.body;
+  const {
+    title,
+    description,
+    author,
+    pages,
+    cover,
+    startDate,
+    endDate,
+    previewLink,
+    clubId,
+  } = req.body;
 
-  if (!title || !description || !author || !pages || !cover || !startDate || !endDate || !clubId) {
-    return res.status(400).json({ message: "Missing required parameters. Please provide all fields." });
+  if (
+    !title ||
+    !description ||
+    !author ||
+    !pages ||
+    !cover ||
+    !startDate ||
+    !endDate ||
+    !previewLink ||
+    !clubId
+  ) {
+    return res.status(400).json({
+      message: "Missing required parameters. Please provide all fields.",
+    });
   }
 
   try {
@@ -52,6 +73,7 @@ bookRouter.post("/", async (req, res) => {
       cover,
       startDate,
       endDate,
+      previewLink,
       clubId,
     });
 
@@ -62,22 +84,35 @@ bookRouter.post("/", async (req, res) => {
     );
 
     if (!updatedClub) {
-      return res.status(404).json({ message: "Club not found. Unable to add book." });
+      return res
+        .status(404)
+        .json({ message: "Club not found. Unable to add book." });
     }
 
-    return res.status(201).json({ message: "Book created successfully", book: newBook });
-
+    return res
+      .status(201)
+      .json({ message: "Book created successfully", book: newBook });
   } catch (err) {
     console.error("Error creating book:", err);
-    res.status(500).json({ message: "Something went wrong. Please try again." });  
+    res
+      .status(500)
+      .json({ message: "Something went wrong. Please try again." });
   }
 });
-
 
 // update info
 bookRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { title, description, author, pages, cover, startDate, endDate } = req.body;
+  const {
+    title,
+    description,
+    author,
+    pages,
+    cover,
+    startDate,
+    previewLink,
+    endDate,
+  } = req.body;
 
   try {
     /// TODO: make a find by id func
@@ -93,20 +128,23 @@ bookRouter.put("/:id", async (req, res) => {
     if (pages) updateFields.pages = pages;
     if (cover) updateFields.cover = cover;
     if (startDate) updateFields.startDate = startDate;
+    if (previewLink) updateFields.previewLink = previewLink;
     if (endDate) updateFields.endDate = endDate;
 
-    const updatedBook = await BookModel.findByIdAndUpdate(id, updateFields, { new: true });
-    return res.status(200).json({ 
-      message: "Book updated successfully", 
-      book: updatedBook 
+    const updatedBook = await BookModel.findByIdAndUpdate(id, updateFields, {
+      new: true,
     });
-
-  } catch(err) {
+    return res.status(200).json({
+      message: "Book updated successfully",
+      book: updatedBook,
+    });
+  } catch (err) {
     console.error("Error updating book:", err);
-    res.status(500).json({ message: "Something went wrong. Please try again." });  
+    res
+      .status(500)
+      .json({ message: "Something went wrong. Please try again." });
   }
 });
-
 
 // delete book
 bookRouter.delete("/:bookId", async (req, res) => {
@@ -130,16 +168,19 @@ bookRouter.delete("/:bookId", async (req, res) => {
     );
 
     if (!updatedClub) {
-      return res.status(404).json({ message: "Club not found or unable to update" });
+      return res
+        .status(404)
+        .json({ message: "Club not found or unable to update" });
     }
 
     await BookModel.findByIdAndDelete(bookId);
 
     return res.status(200).json({ message: "Book deleted successfully" });
-
   } catch (err) {
     console.error("Error deleting book:", err);
-    return res.status(500).json({ message: "Internal server error. Please try again later." });
+    return res
+      .status(500)
+      .json({ message: "Internal server error. Please try again later." });
   }
 });
 
