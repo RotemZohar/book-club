@@ -2,9 +2,9 @@ export const routes = {
   signin: "/",
   home: "/home",
   signup: "/signup",
-  createGroup: "/groups/new",
-  groups: "/groups",
-  group: "/group/:groupId",
+  createClub: "/clubs/new",
+  clubs: "/clubs",
+  club: "/club/:clubId",
   editDetals: "/editDetails",
-  groupEdit: "/group/:groupId/edit",
+  clubEdit: "/club/:clubId/edit",
 };

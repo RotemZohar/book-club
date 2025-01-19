@@ -8,6 +8,7 @@ import { useAppSelector } from "./redux/store";
 import SignupPage from "./components/sign-up/SignupPage";
 import Navbar from "./components/navbar/Navbar";
 import HomePage from "./components/home-page/homePage";
+import ClubPage from "./components/club-page/ClubPage";
 
 const App = () => {
   const showNavbar = useAppSelector((state) => state.navbarReducer);
@@ -21,6 +22,7 @@ const App = () => {
         {/* Everything that's inside private route is accessible only after logging in */}
         <Route element={<PrivateRoute />}>
           <Route path={routes.home} element={<HomePage />} />
+          <Route path={routes.club} element={<ClubPage />} />
         </Route>
         <Route path="*" element={<Navigate to={routes.home} />} />
       </Routes>
